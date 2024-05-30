@@ -33,11 +33,11 @@ const styles = {
   },
 };
 
-const Sellers = () => {
+const ClientsTable = () => {
   return (
     <div style={{ padding: '20px' }}>
       <Typography variant="h3" gutterBottom style={styles.header}>
-        Sellers
+        Clients
       </Typography>
       <Paper style={styles.paper}>
         <Table>
@@ -51,6 +51,7 @@ const Sellers = () => {
             </TableRow>
           </TableHead>
           <TableBody>
+            {/* Render user rows here */}
           </TableBody>
         </Table>
       </Paper>
@@ -58,4 +59,4 @@ const Sellers = () => {
   );
 };
 
-export default Sellers;
+export default ClientsTable;

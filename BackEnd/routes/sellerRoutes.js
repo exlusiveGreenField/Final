@@ -3,6 +3,7 @@ const router = express.Router();
 const Product = require('../database/Product');
 const User = require("../database/User");
 const Order = require('../database/Order');
+const {logIn,signUp} = require('../database/Auth')
 
 
 router.get('/products', Product.getOneProduct);
@@ -15,6 +16,6 @@ router.post('/products/add',Product.addProduct)
 // router.get('/:userid',User.getOneUser)
 // router.put('/:userid',User.updateUser)
 
-// router.post('/log',User.login)
-// router.post('/reg',User.register)
+router.post('/signup',signUp)
+router.post('/login',logIn)
 module.exports=router

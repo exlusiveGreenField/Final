@@ -1,5 +1,6 @@
+// ProductsTable.js
 import React from 'react';
-import { Typography, Table, TableHead, TableBody, TableRow, TableCell, Paper } from '@mui/material';
+import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
 const styles = {
   header: {
@@ -11,11 +12,6 @@ const styles = {
     marginBottom: '20px',
     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
   },
-  paper: {
-    padding: '20px',
-    borderRadius: '8px',
-    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-  },
   tableHeadRow: {
     backgroundColor: '#023047',
   },
@@ -23,39 +19,34 @@ const styles = {
     color: '#ffffff',
     fontWeight: 'bold',
   },
-  tableBodyRow: {
-    '&:hover': {
-      backgroundColor: '#f1f1f1',
-    },
-  },
-  deleteButton: {
-    color: '#d32f2f',
-  },
 };
 
-const Sellers = () => {
+const ProductsTable = () => {
   return (
     <div style={{ padding: '20px' }}>
       <Typography variant="h3" gutterBottom style={styles.header}>
-        Sellers
+        Products
       </Typography>
-      <Paper style={styles.paper}>
+      <TableContainer>
         <Table>
           <TableHead>
             <TableRow style={styles.tableHeadRow}>
-              <TableCell style={styles.tableHeadCell}>ID</TableCell>
               <TableCell style={styles.tableHeadCell}>Name</TableCell>
-              <TableCell style={styles.tableHeadCell}>Email</TableCell>
-              <TableCell style={styles.tableHeadCell}>Password</TableCell>
-              <TableCell style={styles.tableHeadCell}>Action</TableCell> 
+              <TableCell style={styles.tableHeadCell}>Image</TableCell>
+              <TableCell style={styles.tableHeadCell}>Category</TableCell>
+              <TableCell style={styles.tableHeadCell}>Price</TableCell>
+              <TableCell style={styles.tableHeadCell}>Stock</TableCell>
+              <TableCell style={styles.tableHeadCell}>Description</TableCell>
+              <TableCell style={styles.tableHeadCell}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
+            {/* Render product rows here */}
           </TableBody>
         </Table>
-      </Paper>
+      </TableContainer>
     </div>
   );
 };
 
-export default Sellers;
+export default ProductsTable;
