@@ -13,7 +13,7 @@ router.get('/products/category/:category',Product.getByCategory)
 router.post('/order',Order.addOrder) 
 
 
-
+// router.get('/user',User.getAllUsers)
 // router.get('/:userid',User.getOneUser)
 // router.put('/:userid',User.updateUser)
 

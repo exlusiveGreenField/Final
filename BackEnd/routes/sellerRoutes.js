@@ -13,8 +13,8 @@ router.post('/products/add',protect,Product.addProduct)
 
 //JWT token 
 
-// router.get('/:userid',User.getOneUser)
-// router.put('/:userid',User.updateUser)
+router.get('/:userid',User.getOneUser)
+router.put('/:userid',User.updateUser)
 
 router.post('/signup',signUp)
 router.post('/login',logIn)
