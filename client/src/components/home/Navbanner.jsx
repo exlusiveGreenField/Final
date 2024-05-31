@@ -1,12 +1,11 @@
 import React from "react";
 import {
   Box,
-  Drawer,
   List,
   ListItem,
   Button,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -27,51 +26,54 @@ const settings = {
 };
 
 const Navbanner = () => {
+  const navigate = useNavigate();
+
+  const clicked = (category) => {
+    navigate('/shop', { state: { category } });
+  };
+
   return (
     <Box>
       <Box sx={{ display: "flex", marginTop: "50px" }}>
-        
-          <Box sx={{ overflow: "auto" }}>
-            <List style={{ marginTop: "50px", color: "black" }}>
-              <ListItem component={Link} to="/">
-                <Button style={{ color: "black" }}>Women's fashion</Button>
-              </ListItem>
-              <ListItem component={Link} to="/">
-                <Button style={{ color: "black" }}>Men's fashion</Button>
-              </ListItem>
-              <ListItem component={Link} to="/">
-                <Button style={{ color: "black" }}>Electronics</Button>
-              </ListItem>
-              <ListItem component={Link} to="/">
-                <Button style={{ color: "black" }}>Home & lifestyle</Button>
-              </ListItem>
-              <ListItem component={Link} to="/">
-                <Button style={{ color: "black" }}>Sports & Outdoors</Button>
-              </ListItem>
-              <ListItem component={Link} to="/">
-                <Button style={{ color: "black" }}>Baby's toys</Button>
-              </ListItem>
-              <ListItem component={Link} to="/">
-                <Button style={{ color: "black" }}>Groceries & Pets</Button>
-              </ListItem>
-              <ListItem component={Link} to="/">
-                <Button style={{ color: "black" }}>Health & Beauty</Button>
-              </ListItem>
-            </List>
-          </Box>
-       
-
+        <Box sx={{ overflow: "auto" }}>
+          <List style={{ marginTop: "50px", color: "black" }}>
+            <ListItem>
+              <Button style={{ color: "black" }} onClick={() => clicked("Women's fashion")}>Women's fashion</Button>
+            </ListItem>
+            <ListItem>
+              <Button style={{ color: "black" }} onClick={() => clicked("Men's fashion")}>Men's fashion</Button>
+            </ListItem>
+            <ListItem>
+              <Button style={{ color: "black" }} onClick={() => clicked("Electronics")}>Electronics</Button>
+            </ListItem>
+            <ListItem>
+              <Button style={{ color: "black" }} onClick={() => clicked("Home & lifestyle")}>Home & lifestyle</Button>
+            </ListItem>
+            <ListItem>
+              <Button style={{ color: "black" }} onClick={() => clicked("Sports & Outdoors")}>Sports & Outdoors</Button>
+            </ListItem>
+            <ListItem>
+              <Button style={{ color: "black" }} onClick={() => clicked("Baby's toys")}>Baby's toys</Button>
+            </ListItem>
+            <ListItem>
+              <Button style={{ color: "black" }} onClick={() => clicked("Groceries & Pets")}>Groceries & Pets</Button>
+            </ListItem>
+            <ListItem>
+              <Button style={{ color: "black" }} onClick={() => clicked("Health & Beauty")}>Health & Beauty</Button>
+            </ListItem>
+          </List>
+        </Box>
         <Box component="main" sx={{ flexGrow: 1, p: 3, width: "55%" }}>
           <Slider {...settings}>
             {images.map((src, index) => (
               <Box key={index}>
-                <img src={src} style={{ width: "90%", height: "500px" ,marginLeft:"80px"}} />
+                <img src={src} style={{ width: "90%", height: "500px", marginLeft: "80px" }} alt={`Slide ${index}`} />
               </Box>
             ))}
           </Slider>
         </Box>
       </Box>
-      <hr width='90%' />
+      <hr  />
     </Box>
   );
 };

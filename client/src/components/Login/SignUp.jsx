@@ -1,84 +1,136 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Box, Grid, Typography, TextField, Button } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Link,
+} from '@mui/material';
+import { useAuth } from '../context/AuthContext';
+import Navbar from '../Navbar';
+
 function Signup() {
-  // we state variables for username, password, and message
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
+  const [role, setRole] = useState('Client');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
-  // Function to handle signup
+  const { loginAction } = useAuth();
+
   const handleSignup = async (e) => {
-    // we need to use this code to prevent default form submission behavior
     e.preventDefault();
     try {
-      // send POST request to register endpoint with username and password
-      const response = await axios.post(
-        'http://localhost:5000/api/auth/signup',
-        { username, email,password }
-      );
-      setMessage('Signup successful!');
+      await loginAction(
+        { userName: username, email: email, password: password, role: role },
+        'signup'
+      ).then(() => {
+        setMessage('Signup successful!');
+      });
     } catch (error) {
       setMessage('Signup failed. Please try again.');
     }
   };
+
   return (
-    <Grid container justifyContent="center" alignItems="center" spacing={2}>
-      <Grid item xs={12}>
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h5" gutterBottom>
-            Membership Application
-          </Typography>
-        </Box>
-      </Grid>
-      <Grid item xs={12}>
-        <form onSubmit={handleSignup}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Username"
-                variant="outlined"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Email"
-                variant="outlined"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Password"
-                variant="outlined"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button type="submit" variant="contained" color="primary">
-                Sign Up
-              </Button>
-            </Grid>
+    <div>
+      <Navbar />
+      <Box mt={4}>
+        <Grid container justifyContent="center">
+          <Grid item xs={12} md={9}>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              bgcolor="background.paper"
+              boxShadow={4}
+              borderRadius={2}
+              p={4}
+              width="90%"
+              maxWidth="900px"
+              margin="0 auto"
+            >
+              <Grid container spacing={4} alignItems="center">
+                <Grid item xs={12} md={6}>
+                  <img
+                    src="https://www.shutterstock.com/image-vector/new-user-online-registration-sign-260nw-1982734163.jpg"
+                    alt="Signup"
+                    style={{ width: '100%', height: 'auto' }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <form onSubmit={handleSignup}>
+                    <Typography variant="h5" gutterBottom>
+                      Membership Application
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      label="Username"
+                      variant="outlined"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      sx={{ marginBottom: 2 }}
+                    />
+                    <TextField
+                      fullWidth
+                      label="Email"
+                      variant="outlined"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      sx={{ marginBottom: 2 }}
+                    />
+                    <TextField
+                      fullWidth
+                      label="Password"
+                      variant="outlined"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      sx={{ marginBottom: 2 }}
+                    />
+                    <FormControl fullWidth variant="outlined" sx={{ marginBottom: 2 }}>
+                      <InputLabel id="role-label">Role</InputLabel>
+                      <Select
+                        labelId="role-label"
+                        id="role"
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                        label="Role"
+                      >
+                        <MenuItem value="Client">Client</MenuItem>
+                        <MenuItem value="Seller">Seller</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <Button type="submit" variant="contained" color="primary">
+                      Sign Up
+                    </Button>
+                    <Typography variant="body1">
+                      Already have an account?{' '}
+                      <Link component="button" onClick={() => navigate('/login')}>
+                        Login
+                      </Link>
+                    </Typography>
+                    {message && (
+                      <Box mt={2}>
+                        <Typography>{message}</Typography>
+                      </Box>
+                    )}
+                  </form>
+                </Grid>
+              </Grid>
+            </Box>
           </Grid>
-        </form>
-      </Grid>
-      {message && (
-        <Grid item xs={12}>
-          <Typography>{message}</Typography>
         </Grid>
-      )}
-    </Grid>
+      </Box>
+    </div>
   );
 }
+
 export default Signup;

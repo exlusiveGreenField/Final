@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./Navbar";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Box,
@@ -23,6 +23,8 @@ function One() {
   const [rating, setRating] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const location = useLocation();
+  const navigate = useNavigate(); // Using useNavigate to navigate
+
   const productId = location.state.productId;
 
   useEffect(() => {
@@ -41,6 +43,18 @@ function One() {
 
   const PlusMinus = (increment) => {
     increment ? setQuantity(quantity + increment) : setQuantity(quantity + increment);
+  };
+
+  const addToCart = () => {
+    let cartItems = JSON.parse(localStorage.getItem('Items')) || [];
+    const existingItem = cartItems.find(item => item.id === product.id);
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cartItems.push({ ...product, quantity: 1 });
+    }
+    localStorage.setItem('Items', JSON.stringify(cartItems));
+    navigate("/cart"); 
   };
 
   return (
@@ -105,6 +119,7 @@ function One() {
                     backgroundColor: "darkred",
                   },
                 }}
+                onClick={addToCart}
               >
                 Buy Now
               </Button>
