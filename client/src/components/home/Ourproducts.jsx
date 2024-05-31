@@ -13,7 +13,6 @@ const Ourproducts = () => {
     axios.get('http://localhost:5000/Client/products')
       .then(response => {
         setProducts(response.data.slice(0, 8));
-        console.log(response);
       })
       .catch(error => {
         console.error('There was an error fetching the products!', error);

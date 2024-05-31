@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const db = require('./config');
 
-
 const protect = async (req, res) => {
     console.log(req);
     //1- check if the token already exist , if it is storeit
@@ -13,7 +12,7 @@ const protect = async (req, res) => {
       token = req.headers.authorization.split(' ')[1];
     }
     if (!token) {
-      return res.status(401).json({ error: error.message });
+      return res.status(401).json({ error: 'Unauthorized: Token missing' });
     }
     //2- verification
     const decoded = jwt.verify(token, 'your-jwt-secrets');
@@ -24,32 +23,38 @@ const protect = async (req, res) => {
       if (!currUser) {
         return res.status(401).json({ error: 'User not found' });
       }
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: error.message });
+    }catch (error) {
+      logger.error(`Error in token validation: ${error.message}`);
+      res.status(401).json({ error: 'Not authorized, token failed' });
     }
   };
-  const checkAdminRole = async (req,res)=>{
-    
-  }
-  
-  
-  const forgotPassWord = async()=>{
-  //1- getting the user email based on the post 
-  const user = await db.User.findOne({email:req.body.email})
-  if (!user) {
-    return res.status(404).json({ error: 'User not found with given email ' });
-  }
-  //2- generate a randow new reset token 
-  const generateRandomToken = (length) => {
-    return crypto.randomBytes(length).toString('hex');
+  const checkAdminRole = (req, res, next) => {
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ error: 'Access denied, admin only' });
+    }
+    next();
   };
-  // generate a 25 character token
-  const resetToken = generateRandomToken(25); 
-  console.log('Reset token:', resetToken);
-  //3- send back that token to el user 
-  }
+  const handleErrors = (res, error) => {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  };
+
+  // const forgotPassWord = async()=>{
+  // //1- getting the user email based on the post 
+  // const user = await db.User.findOne({email:req.body.email})
+  // if (!user) {
+  //   return res.status(404).json({ error: 'User not found with given email ' });
+  // }
+  // //2- generate a randow new reset token 
+  // const generateRandomToken = (length) => {
+  //   return crypto.randomBytes(length).toString('hex');
+  // };
+  // // generate a 25 character token
+  // const resetToken = generateRandomToken(25); 
+  // console.log('Reset token:', resetToken);
+  // //3- send back that token to el user 
+  // }
   
 
 
-  module.exports = {protect,forgotPassWord}
+  module.exports = {protect,handleErrors,checkAdminRole}

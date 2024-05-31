@@ -43,7 +43,6 @@ const Todays = () => {
     axios.get('http://localhost:5000/Client/products/FS') 
       .then(response => {
         setproducts(response.data);
-        console.log(response);
       })
       .catch(error => {
         console.error('There was an error fetching the products!', error);

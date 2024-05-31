@@ -31,7 +31,6 @@ function One() {
         .get(`http://localhost:5000/Client/products/${productId}`)
         .then((response) => {
           setProduct(response.data);
-          console.log(response.data);
         })
         .catch((error) => {
           console.error("There was an error fetching the product!", error);

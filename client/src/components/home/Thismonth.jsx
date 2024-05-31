@@ -13,7 +13,6 @@ const Thismonth = () => {
     axios.get('http://localhost:5000/Client/products') 
       .then(response => {
         setproducts(response.data.slice(8,12));
-        console.log(response);
       })
       .catch(error => {
         console.error('There was an error fetching the products!', error);
