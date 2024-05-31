@@ -15,6 +15,21 @@ import {
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../Navbar';
 
+import {
+  Box,
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Link,
+} from '@mui/material';
+import { useAuth } from '../context/AuthContext';
+import Navbar from '../Navbar';
+
 function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');

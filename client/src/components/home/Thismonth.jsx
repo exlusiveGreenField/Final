@@ -2,7 +2,7 @@ import React,{useState,useEffect} from "react";
 import { Box, Grid, Card, CardContent, CardMedia, Typography, Button } from "@mui/material";
 import SquareIcon from '@mui/icons-material/Square';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate ,Link} from "react-router-dom";
 import ProductCard from "../ProductCard";
 
 
@@ -28,7 +28,7 @@ const Thismonth = () => {
         <Typography variant="h4" component="div">
           Best Selling Products
         </Typography>
-        <Button variant="contained" style={{ color: "white", backgroundColor: "red" }}>
+        <Button variant="contained" style={{ color: "white", backgroundColor: "red" }} component={Link} to='/shop'>
           View all
         </Button>
       </Box>
