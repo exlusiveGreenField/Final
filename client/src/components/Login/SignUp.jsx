@@ -15,6 +15,21 @@ import {
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../Navbar';
 
+import {
+  Box,
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Link,
+} from '@mui/material';
+import { useAuth } from '../context/AuthContext';
+import Navbar from '../Navbar';
+
 function Signup() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -59,15 +74,20 @@ function Signup() {
               <Grid container spacing={4} alignItems="center">
                 <Grid item xs={12} md={6}>
                   <img
-                    src="https://www.shutterstock.com/image-vector/new-user-online-registration-sign-260nw-1982734163.jpg"
+                    src="https://s3-alpha-sig.figma.com/img/75f3/94c0/a1c7dc5b68a42239311e510f54d8cd59?Expires=1717977600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=nxMmcLhDtU4rZjNqF~3dko2JRdwdfpOvZKhGTpTt1aHOlqVteTtrRlBp3HeK~hYWrTe7a8rpwm7LFLhnHGTGVc~NcfXoWkEMV1ibyMuNzL92tUIQ-O4H9fbZ1FRiyJEYfAotxkSleK15Z~REekYxnCE5yYmsDBfRLkgOFYUHOqm1veciY3mvSruMfp0d8ivEFPyP58797yqnYeAnlVR4kYi0F588gMvxhjpUcKk8FHRAorAPnnBhQKe2SEs9UkKmJyQ6PEEAPc04~Zfh9plGg9K6WtZ2rwjU70Y6VhuG~HnaAqlnJ5n2fj5kw0D6zVDiTA-oEDeLoj4uPhVPNb51-A__"
                     alt="Signup"
-                    style={{ width: '100%', height: 'auto' }}
+                    style={{ width: '320px', height: '350px' }}
                   />
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <form onSubmit={handleSignup}>
-                    <Typography variant="h5" gutterBottom>
-                      Membership Application
+                    <Grid justifyContent="center" display="flex">
+                      <Typography variant="h5" gutterBottom>
+                        Membership Application
+                      </Typography>
+                    </Grid>
+                    <Typography variant="p">
+                      Enter your details below
                     </Typography>
                     <TextField
                       fullWidth
@@ -95,7 +115,11 @@ function Signup() {
                       onChange={(e) => setPassword(e.target.value)}
                       sx={{ marginBottom: 2 }}
                     />
-                    <FormControl fullWidth variant="outlined" sx={{ marginBottom: 2 }}>
+                    <FormControl
+                      fullWidth
+                      variant="outlined"
+                      sx={{ marginBottom: 2 }}
+                    >
                       <InputLabel id="role-label">Role</InputLabel>
                       <Select
                         labelId="role-label"
@@ -108,13 +132,22 @@ function Signup() {
                         <MenuItem value="Seller">Seller</MenuItem>
                       </Select>
                     </FormControl>
-                    <Button type="submit" variant="contained" color="primary">
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      sx={{ bgcolor: 'red' }}
+                    >
                       Sign Up
                     </Button>
                     <Typography variant="body1">
                       Already have an account?{' '}
-                      <Link component="button" onClick={() => navigate('/login')}>
-                        Login
+                      <Link
+                        component="button"
+                        onClick={() => navigate('/login')}
+                        sx={{ color: 'red' }}
+                      >
+                        Log In
                       </Link>
                     </Typography>
                     {message && (
