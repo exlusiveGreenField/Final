@@ -1,28 +1,30 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes } = require('sequelize');
+ const env= require('dotenv').config();
 
-const dbName = "exclusive";
-const dbUser = "root";
-const dbPass = "root";
-const dbHost = "localhost";
+const dbName = 'exclusive';
+const dbUser = 'root';
+const dbPass = 'roots';
+const dbHost = 'localhost';
 
 const sequelize = new Sequelize(dbName, dbUser, dbPass, {
   host: dbHost,
-  dialect: "mysql",
+  dialect: 'mysql',
 });
 
 sequelize
   .authenticate()
   .then(() => {
-    console.log("Connected database");
+    console.log('Connected database');
   })
   .catch((error) => {
-    console.error("failed to connect to the database:", error);
+    console.error('failed to connect to the database:', error);
   });
 
-const User = require("../Models/User")(sequelize, DataTypes);
-const Product = require("../Models/Products")(sequelize, DataTypes);
-const Order=require("../Models/Order")(sequelize,DataTypes);
-const Wishlist=require("../Models/Wishlist")(sequelize,DataTypes)
+const User = require('../Models/User')(sequelize, DataTypes);
+const Product = require('../Models/Products')(sequelize, DataTypes);
+const Order = require('../Models/Order')(sequelize, DataTypes);
+const Wishlist = require('../Models/Wishlist')(sequelize, DataTypes);
+
 // sequelize
 //   .sync()
 //   .then(() => {
@@ -32,21 +34,21 @@ const Wishlist=require("../Models/Wishlist")(sequelize,DataTypes)
 //     console.error("Unable to create tables:", error);
 //   });
 
-  const db = {};
+const db = {};
 
-  db.connection = sequelize;
-  db.Sequelize = Sequelize;
-  
-  db.User = User;
-  db.Product = Product;
-  db.Order=Order;
-  db.Wishlist=Wishlist
+db.connection = sequelize;
+db.Sequelize = Sequelize;
+
+db.User = User;
+db.Product = Product;
+db.Order = Order;
+db.Wishlist = Wishlist;
 
   db.User.hasMany(db.Order,{foreignKey: 'userId'});
   db.Order.belongsTo(db.User,{foreignKey: 'userId'})
   
-  db.User.hasOne(db.Wishlist,{foreignKey: 'userId'})
-  db.Wishlist.belongsTo(db.User,{foreignKey: 'userId'})
+  db.User.belongsToMany(db.Product,{through: 'Wishlist'})
+  db.Product.belongsToMany(db.User,{through: 'Wishlist'})
   // export your Model Phrase below
   module.exports = db;
 

@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const db = require('./config');
 const bcrypt = require('bcryptjs');
+const logger = require('../utiles/logger')
 
 const signUp = async (req, res) => {
   const { userName, email, password, role } = req.body;
@@ -15,14 +16,15 @@ const signUp = async (req, res) => {
       role: role,
     });
     // GEnerate Token
-    const token = jwt.sign(
+    const token = jwt.sign( 
       { id: newUser.id, role: newUser.role },
       'your-jwt-secrets'
     );
     const obj = { data: newUser, token };
     res.status(201).json(obj);
+    logger.info(`registered User: ${newUser.email}`);
   } catch (error) {
-    console.error(error);
+    logger.error(`error registering user: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
@@ -45,25 +47,14 @@ const logIn = async (req, res) => {
     // create a JWT token with the user's id, userName, and role, and sign it with a secret key
     const token = jwt.sign(
       { id: user.id, role: user.role },
-      'your-jwt-secrets'
+      process.env.JWT_SECRET,{expiresIn: '90d'}
     );
     const obj2 = { data: user, token };
     return res.status(200).json(obj2);
-  } catch (error) {
-    console.error(error);
+  }catch (error) {
+    logger.error(`error logging in user: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };
-//authMiddlewares
-
-
-
-
-
-
-
-
- 
-
 
 module.exports = { signUp, logIn };

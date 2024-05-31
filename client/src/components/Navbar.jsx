@@ -37,7 +37,7 @@ const Navbar = () => {
             About
           </Button>
           <Button color="inherit" component={Link} to="/signup">
-            Sign Up
+            SignUp
           </Button>
          
           
@@ -61,11 +61,11 @@ const Navbar = () => {
             <IconButton color="inherit">
               <FavoriteBorderIcon />
             </IconButton>
-            <IconButton color="inherit">
+            <IconButton color="inherit" component={Link} to="/cart">
               <ShoppingCartIcon />
             </IconButton>
-            <IconButton color="inherit">
-              <AccountCircleIcon/>
+            <IconButton color="inherit" >
+              <AccountCircleIcon />
             </IconButton>
           </Box>
       </Toolbar>
