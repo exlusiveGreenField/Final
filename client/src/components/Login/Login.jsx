@@ -24,7 +24,13 @@ function Login() {
 
   const handleLogIn = async (e) => {
     e.preventDefault();
-    loginAction({ userName: username, password: password, role: role });
+    try {
+      await loginAction({ userName: username, password: password, role: role });
+      // Redirect to dashboard or home page after successful login
+      navigate('/');
+    } catch (error) {
+      setMessage('Login failed. Please try again.');
+    }
   };
 
   return (
@@ -35,65 +41,69 @@ function Login() {
       style={{ height: '100vh' }}
     >
       <Grid item xs={12} md={6}>
-        <Box sx={{ textAlign: 'center' }}>
-          <Typography variant="h4" gutterBottom>
-            Login
-          </Typography>
-        </Box>
-        <form onSubmit={handleLogIn}>
-          <Grid container spacing={2} justifyContent="center">
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Username"
-                variant="outlined"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Password"
-                variant="outlined"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth variant="outlined">
-                <InputLabel id="role-label">Role</InputLabel>
-                <Select
-                  labelId="role-label"
-                  id="role"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  label="Role"
-                >
-                  <MenuItem value="client">Client</MenuItem>
-                  <MenuItem value="seller">Seller</MenuItem>
-                  <MenuItem value="admin">Admin</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          bgcolor="background.paper"
+          boxShadow={4}
+          borderRadius={2}
+          p={4}
+          width="90%"
+          maxWidth="400px"
+          margin="0 auto"
+        >
+          <form onSubmit={handleLogIn} style={{ width: '100%' }}>
+            <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
+              Login
+            </Typography>
+            <TextField
+              fullWidth
+              label="Username"
+              variant="outlined"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              sx={{ marginBottom: 2 }}
+            />
+            <TextField
+              fullWidth
+              label="Password"
+              variant="outlined"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              sx={{ marginBottom: 2 }}
+            />
+            <FormControl fullWidth variant="outlined" sx={{ marginBottom: 2 }}>
+              <InputLabel id="role-label">Role</InputLabel>
+              <Select
+                labelId="role-label"
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                label="Role"
               >
-                Login
-              </Button>
-            </Grid>
-          </Grid>
-        </form>
-        {message && (
-          <Box mt={2} sx={{ textAlign: 'center' }}>
-            <Typography color="error">{message}</Typography>
-          </Box>
-        )}
+                <MenuItem value="client">Client</MenuItem>
+                <MenuItem value="seller">Seller</MenuItem>
+                <MenuItem value="admin">Admin</MenuItem>
+              </Select>
+            </FormControl>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ marginBottom: 2 }}
+            >
+              Login
+            </Button>
+          </form>
+          {message && (
+            <Box mt={2} sx={{ textAlign: 'center', width: '100%' }}>
+              <Typography color="error">{message}</Typography>
+            </Box>
+          )}
+        </Box>
       </Grid>
     </Grid>
   );

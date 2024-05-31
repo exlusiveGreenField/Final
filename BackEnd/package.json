@@ -1,16 +1,16 @@
 {
-    "name": "express-main-example",
+    "name": "exclusive",
     "version": "0.0.0",
     "description": "This is an example of how to setup Sequelize and Express together in a project for NodeJS 10 and above.",
     "main": "app.js",
     "scripts": {
-      "start": "nodemon app.js",
-      "setup-example-db": "node sqlite-example-database/setup.js"
+      "start": "nodemon app.js"
+      
     },
     "engines": {
       "node": ">=10"
     },
-    "license": "MIT",
+    "license": "taha",
     "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
