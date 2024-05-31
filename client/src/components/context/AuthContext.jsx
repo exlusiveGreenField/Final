@@ -4,29 +4,33 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 export const AuthProvider=({ children }) =>{
+  console.log(children);
   const [user, setUser] = useState(localStorage.getItem('user') || {});
   const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [role, setRole] = useState(localStorage.getItem('role') || '');
 
   const navigate = useNavigate();
 
-  const loginAction = async (data) => {
+  const loginAction = async (data,str) => {
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/auth/login',
+        `http://localhost:5000/${data.role}/${str}`,
         data
-      );
-      if (response.status === 200) {
-        setUser(response.data.user);
-        localStorage.setItem('user', JSON.stringify(response.data.user)); 
+      ).then((response)=>{
+        console.log(response);
+        setUser(response.data.data.userName);
+        localStorage.setItem('user', JSON.stringify(response.data.data.userName)); 
         setToken(response.data.token);
+        console.log('hey');
         localStorage.setItem('token', response.data.token);
-        setRole(response.data.role);
-        localStorage.setItem('role', JSON.stringify(response.data.role));
-        if (response.data.user.role === 'admin') {
-          navigate('/adminDash');
-        }
-      }
+        setRole(response.data.data.role);
+        localStorage.setItem('role', JSON.stringify(response.data.data.role));
+        
+         navigate('/');})
+     
+        
+        
+      
     } catch (err) {
       console.error(err);
       if (err.response.data && err.response.data.message) {
