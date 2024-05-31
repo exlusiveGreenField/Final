@@ -16,7 +16,7 @@ const signUp = async (req, res) => {
       role: role,
     });
     // GEnerate Token
-    const token = jwt.sign(
+    const token = jwt.sign( 
       { id: newUser.id, role: newUser.role },
       'your-jwt-secrets'
     );

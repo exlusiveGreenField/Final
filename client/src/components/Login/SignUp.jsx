@@ -121,7 +121,7 @@ function Signup() {
                       type="submit"
                       variant="contained"
                       color="primary"
-                      sx={{ bgcolor: '#ff0000' }}
+                      sx={{ bgcolor: 'red' }}
                     >
                       Sign Up
                     </Button>
@@ -130,9 +130,9 @@ function Signup() {
                       <Link
                         component="button"
                         onClick={() => navigate('/login')}
-                        sx={{ color: '#ff0000' }}
+                        sx={{ color: 'red' }}
                       >
-                        Login
+                        Log In
                       </Link>
                     </Typography>
                     {message && (

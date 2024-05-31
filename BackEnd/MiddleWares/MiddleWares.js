@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const db = require('./config');
+const db = require('../database/config');
 
 const protect = async (req, res) => {
     console.log(req);
