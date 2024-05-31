@@ -53,7 +53,7 @@ module.exports = {
         }
       },
       modifyProduct: async (req, res) => {
-        const productId = req.params.productid;
+        const productId = req.params.productId;
         const updatedProduct = req.body;
         try {
           const product = await db.Product.findByPk(productId);
@@ -68,7 +68,7 @@ module.exports = {
         }
       },
       removeProduct: async (req, res) => {
-        const productId = req.params.productid;
+        const productId = req.params.productId;
         try {
         await db.Product.destroy({ where:{id:productId}  }); 
           res.status(201).send('deleted')

@@ -6,7 +6,8 @@ import Oneproduct from './components/Oneproduct.jsx'
 import Signup from './components/Login/SignUp';
 import Login from './components/Login/Login';
 import { AuthProvider } from './components/context/AuthContext';
-import Dashboard from './components/Admin/Dashboard.jsx'
+import Dashboard from './components/Admin/Dashboard.jsx';
+import Orders from './components/Admin/OrdersTable.jsx'
 function App() {
   return (
     <div className="App">
@@ -20,6 +21,8 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin/orders" element={<Orders />} />
+
         </Routes>
         </AuthProvider>
       </BrowserRouter>

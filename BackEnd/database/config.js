@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require("sequelize");
 
 const dbName = "exclusive";
 const dbUser = "root";
-const dbPass = "root";
+const dbPass = "walkitlikeitalkit";
 const dbHost = "localhost";
 
 const sequelize = new Sequelize(dbName, dbUser, dbPass, {
