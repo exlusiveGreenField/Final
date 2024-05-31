@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Box, Grid, Typography, Button } from "@mui/material";
 import SquareIcon from '@mui/icons-material/Square';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import ProductCard from "../ProductCard";
 
 const Ourproducts = () => {
@@ -13,7 +13,6 @@ const Ourproducts = () => {
     axios.get('http://localhost:5000/Client/products')
       .then(response => {
         setProducts(response.data.slice(0, 8));
-        console.log(response);
       })
       .catch(error => {
         console.error('There was an error fetching the products!', error);
@@ -41,11 +40,11 @@ const Ourproducts = () => {
         ))}
       </Grid>
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-        <Button variant="contained" style={{ color: "white", backgroundColor: "red" }}>
+        <Button variant="contained" style={{ color: "white", backgroundColor: "red" }} component={Link} to='/shop'>
           View all products
         </Button>
       </Box>
-      <hr width='90%' />
+      <hr />
     </Box>
   );
 };

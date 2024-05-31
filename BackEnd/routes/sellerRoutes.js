@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../database/Product');
-const User = require("../database/User");
-const Order = require('../database/Order');
+// const User = require("../database/User");
+// const Order = require('../database/Order');
 const {logIn,signUp} = require('../database/Auth')
 
 
