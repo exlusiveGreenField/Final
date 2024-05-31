@@ -5,9 +5,10 @@ import Contact from "./components/Contact.jsx";
 import Oneproduct from './components/Oneproduct.jsx'
 import Signup from './components/Login/SignUp';
 import Login from './components/Login/Login';
+import Shop from "./components/Shop.jsx";
 import { AuthProvider } from './components/context/AuthContext';
-import Dashboard from './components/Admin/Dashboard.jsx';
-import Orders from './components/Admin/OrdersTable.jsx'
+import Dashboard from './components/Admin/Dashboard.jsx'
+import Cart from "./components/Cart.jsx";
 function App() {
   return (
     <div className="App">
@@ -21,8 +22,8 @@ function App() {
           <Route path="/Signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/admin/orders" element={<Orders />} />
-
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
         </AuthProvider>
       </BrowserRouter>

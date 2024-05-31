@@ -1,32 +1,17 @@
-const { where } = require("sequelize");
+
 const db = require("./config");
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken')
-module.exports = {
 
-  getUsersByRole: async (req, res) => {
-    const role = req.params.role;
+module.exports = {
+  getAllUsers: async (req, res) => {
     try {
-      const users = await db.User.findAll({
-        where: {
-          role: role,
-        },
-      });
+      const users = await db.User.findAll();
       res.json(users);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Error fetching users by role");
+      res.status(500).send("Error fetching users");
     }
   },
-  // getAllUsers: async (req, res) => {
-  //   try {
-  //     const users = await db.User.findAll();
-  //     res.json(users);
-  //   } catch (error) {
-  //     console.error(error);
-  //     res.status(500).send("Error fetching users");
-  //   }
-  // },
 
   getOneUser: async (req, res) => {
     const userId = req.params.userid;

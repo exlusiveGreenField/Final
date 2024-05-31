@@ -45,8 +45,8 @@ const Wishlist=require("../Models/Wishlist")(sequelize,DataTypes)
   db.User.hasMany(db.Order,{foreignKey: 'userId'});
   db.Order.belongsTo(db.User,{foreignKey: 'userId'})
   
-  db.User.hasOne(db.Wishlist,{foreignKey: 'userId'})
-  db.Wishlist.belongsTo(db.User,{foreignKey: 'userId'})
+  db.User.belongsToMany(db.Product,{through: 'Wishlist'})
+  db.Product.belongsToMany(db.User,{through: 'Wishlist'})
   // export your Model Phrase below
   module.exports = db;
 
