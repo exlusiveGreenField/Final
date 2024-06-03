@@ -20,7 +20,10 @@ router.post('/order', protect, Order.addOrder);
 router.get('/get/:userid',User.getOneUser);
 router.put('/up/:userid', protect, User.updateUser);
 
+
 router.post('/signup', validiSeller, signUp);
 router.post('/login', logIn);
 
 module.exports = router;
+
+

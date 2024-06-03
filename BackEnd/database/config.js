@@ -1,10 +1,10 @@
 const { Sequelize, DataTypes } = require('sequelize');
  const env= require('dotenv').config();
 
-const dbName = 'exclusive';
-const dbUser = 'root';
-const dbPass = 'roots';
-const dbHost = 'localhost';
+const dbName = "exclusive";
+const dbUser = "root";
+const dbPass = "walkitlikeitalkit";
+const dbHost = "localhost";
 
 const sequelize = new Sequelize(dbName, dbUser, dbPass, {
   host: dbHost,

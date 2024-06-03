@@ -17,8 +17,10 @@ router.post('/products/add', protect, Product.addProduct);
 
 //JWT token
 
+
 router.get('/:userid', User.getOneUser);
 router.put('/:userid', protect, User.updateUser);
+
 
 router.post('/signup', validiSeller, signUp);
 router.post('/login', logIn);
