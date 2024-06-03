@@ -26,13 +26,7 @@ const Navbar = () => {
             <b>exclusive</b>
           </Button>
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Button color="inherit" component={Link} to="/">
-            Home
-          </Button>
-         
-          
-        </Box>
+
         <Box
             sx={{
               display: "flex",
@@ -43,13 +37,9 @@ const Navbar = () => {
               padding: "0 10px",
             }}
           >
-           <InputBase placeholder="What r u looking for boss ?" /> 
-             <IconButton color="inherit">
-              <SearchIcon />
-            </IconButton> 
           </Box>
         <Box sx={{ display: "flex", alignItems: "center", marginRight: 0 }}>
-          
+
             <IconButton color="inherit">
               <AccountCircleIcon/>
             </IconButton>

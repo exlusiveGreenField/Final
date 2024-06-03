@@ -15,23 +15,23 @@ const UserProfile = () => {
         if (token) {
             const decoded = jwtDecode(token);
             fetchUser(decoded.id);
-            console.log(role);
+            
         }
     }, []);
 
     const fetchUser = async (userId) => {
         try {
-            console.log(userId);
-            const response = await axios.get(`http://localhost:5000/Client/users/${userId}`);
-            setUser(response.data);
-           
             
+            const response = await axios.get(`http://localhost:5000/Client/get/${userId}`);
+            setUser(response.data);
+
+
         } catch (error) {
             console.error('Error fetching user information', error);
         }
     };
-   
- 
+
+
     const logOut = () => {
         setUser({});
         localStorage.removeItem('user');
@@ -64,7 +64,7 @@ const UserProfile = () => {
                         >
                             Modify Info
                         </Button>
-                       
+
                         {role === 'Seller' ? (
                             <Button
                                 variant="contained"
@@ -87,7 +87,7 @@ const UserProfile = () => {
                         >
                             Logout
                         </Button>
-                     
+
                     </Box>
                 </Box>
             </div>

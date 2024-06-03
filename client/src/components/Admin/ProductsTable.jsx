@@ -53,6 +53,7 @@ const styles = {
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
   const [modify, setModify] = useState(false);
+  const [addModalOpen, setAddModalOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState({
     id: "",
     name: "",
@@ -68,16 +69,16 @@ const ProductsTable = () => {
     picture: "",
     category: "",
     stock: "",
-    description: "",
+    description: ""
   });
-
+  
   useEffect(() => {
     fetchProducts();
   }, []);
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/admin/products");
+      const response = await axios.get("http://localhost:5000/Admin/products");
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -104,17 +105,27 @@ const ProductsTable = () => {
     } catch (error) {
       console.error("Error updating product:", error);
     }
-  };
-
-
+  }
+  
+  const addProduct = async () => {
+    try {
+      const { userId, ...productData } = newProduct;
+      await axios.post("http://localhost:5000/admin/products/add", productData);
+            fetchProducts()
+      handleCloseAdd()
+    } catch (error) {
+      console.error("Error adding product:", error);
+    }
+  }
+  
 
   const handleOpenModify = (product) => {
-    setCurrentProduct(product)
-    setModify(true)
-  }
+    setCurrentProduct(product);
+    setModify(true);
+  };
 
   const handleCloseModify = () => {
-    setModify(false)
+    setModify(false);
     setCurrentProduct({
       id: "",
       name: "",
@@ -123,14 +134,34 @@ const ProductsTable = () => {
       category: "",
       stock: "",
       description: "",
-    })
-  }
+    });
+  };
+
+
+  const handleOpenAdd = () => {
+    setAddModalOpen(true)
+  };
+
+  const handleCloseAdd = () => {
+    setAddModalOpen(false)
+    setNewProduct({
+      name: "",
+      price: "",
+      picture: "",
+      category: "",
+      stock: "",
+      description: "",
+    });
+  };
 
   return (
     <div style={{ padding: '20px' }}>
       <Typography variant="h3" gutterBottom style={styles.header}>
         Products
       </Typography>
+      <Button variant="contained" sx={styles.button} onClick={handleOpenAdd}>
+        Add Product
+      </Button>
       <TableContainer>
         <Table>
           <TableHead>
@@ -162,6 +193,7 @@ const ProductsTable = () => {
                   <IconButton onClick={() => deleteProduct(product.id)}>
                     <Delete sx={{ color: '#d32f2f' }} />
                   </IconButton>
+                  
                 </TableCell>
               </TableRow>
             ))}
@@ -224,11 +256,68 @@ const ProductsTable = () => {
           <Button variant="contained" sx={styles.button} onClick={updateProduct}>
             Update Product
           </Button> 
-        
+        </Box>
+      </Modal>
+      <Modal open={addModalOpen} onClose={handleCloseAdd}>
+        <Box sx={styles.modal}>
+          <Typography variant="h6" gutterBottom>
+            Add Product
+          </Typography>
+          <TextField
+            fullWidth
+            label="Name"
+            margin="normal"
+            value={newProduct.name}
+            onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+            sx={styles.input}
+          />
+          <TextField
+            fullWidth
+            label="Price"
+            margin="normal"
+            value={newProduct.price}
+            onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+            sx={styles.input}
+          />
+          <TextField
+            fullWidth
+            label="Picture URL"
+            margin="normal"
+            value={newProduct.picture}
+            onChange={(e) => setNewProduct({ ...newProduct, picture: e.target.value })}
+            sx={styles.input}
+          />
+          <TextField
+            fullWidth
+            label="Category"
+            margin="normal"
+            value={newProduct.category}
+            onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+            sx={styles.input}
+          />
+          <TextField
+            fullWidth
+            label="Stock"
+            margin="normal"
+            value={newProduct.stock}
+            onChange={(e) => setNewProduct({ ...newProduct, stock: e.target.value })}
+            sx={styles.input}
+          />
+          <TextField
+            fullWidth
+            label="Description"
+            margin="normal"
+            value={newProduct.description}
+            onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+            sx={styles.input}
+          />
+          <Button variant="contained" sx={styles.button} onClick={addProduct}>
+            Add Product
+          </Button> 
         </Box>
       </Modal>
     </div>
   )
 }
 
-export default ProductsTable
+export default ProductsTable;

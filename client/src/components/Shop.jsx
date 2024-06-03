@@ -84,7 +84,7 @@ const Shop = () => {
             <Grid container spacing={3}  sx={{marginTop:5}}>
               {products.map((product) => (
                 <Grid item key={product.id} xs={12} sm={6} md={4} lg={3}>
-                  <ProductCard product={product} />
+                  <ProductCard product={product} onClick={() => navigate('/oneProduct', { state: { productId: product.id } })} />
                 </Grid>
               ))}
             </Grid>

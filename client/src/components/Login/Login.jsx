@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../Navbar';
+import axios from 'axios';
 
 import {
   Box,
@@ -28,14 +29,25 @@ function Login() {
   const handleLogIn = async (e) => {
     e.preventDefault();
     try {
-      await loginAction({
+      const response = await axios.get(`http://localhost:5000/Client/${username}`);
+      const user = response.data;
+      const loginResponse = await loginAction({
         userName: username,
-        password: password
-      });
-      setMessage('Welcome!');
-      navigate('/');
+        password: password,
+        email:user.email,
+        role: user.role,
+      },'login');
+      const token = loginResponse.data.token;
+      setToken(token);
+      localStorage.setItem('token', token);
+      await fetchUser();
+      
     } catch (error) {
-      setMessage('Log in failed. Please sign up before logging in.');
+      if (error.response && error.response.status === 404) {
+        setMessage('User not found. Please check your username.');
+      } else {
+        setMessage('Log in failed. Please try again later.');
+      }
     }
   };
 
@@ -94,7 +106,7 @@ function Login() {
                       onChange={(e) => setPassword(e.target.value)}
                       sx={{ marginBottom: 2 }}
                     />
-                    
+
                     <Button
                       type="submit"
                       variant="contained"

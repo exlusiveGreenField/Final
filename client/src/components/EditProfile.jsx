@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useProfile } from './context/ProfileContext';
+import { useProfile } from './context/ProfileContext'
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import {
@@ -10,6 +10,7 @@ import {
   TextField,
   Button,
 } from '@mui/material';
+import Swal from 'sweetalert2';
 
 function EditProfile() {
   const [username, setUsername] = useState('');
@@ -19,8 +20,8 @@ function EditProfile() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [message, setMessage] = useState('');
-  const { user, updateUser } = useProfile();
-
+  const {user,updateUser} =useProfile()
+ 
   const navigate = useNavigate();
 
 
@@ -32,15 +33,30 @@ function EditProfile() {
     }
     try {
       await updateUser(user.id, { 
-        userName:username,
-        email:email,
-        address:address,
-        currentPassword:currentPassword,
-        newPassword:newPassword,
+        userName: username || user.userName,
+        email: email || user.email,
+        address: address || user.address,
+        currentPassword: currentPassword || user.password,
+        newPassword: newPassword || user.password,
       });
       setMessage('Profile updated successfully!');
+      navigate('/profile');
+  
+      
+      Swal.fire({
+        icon: 'success',
+        title: 'Profile Updated',
+        text: 'Your profile has been successfully updated.',
+      });
     } catch (error) {
       setMessage('Profile update failed. Please try again.');
+  
+     
+      Swal.fire({
+        icon: 'error',
+        title: 'Update Failed',
+        text: 'An error occurred while updating your profile. Please try again.',
+      });
     }
   };
 

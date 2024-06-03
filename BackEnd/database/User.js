@@ -11,6 +11,20 @@ module.exports = {
       res.status(500).send('Error fetching users');
     }
   },
+  getUsersByRole: async (req, res) => {
+    const role = req.params.role;
+    try {
+      const users = await db.User.findAll({
+        where: {
+          role: role,
+        },
+      });
+      res.json(users);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error fetching users by role");
+    }
+  },
 
   getOneUser: async (req, res) => {
     const userId = req.params.userId;
@@ -41,7 +55,7 @@ module.exports = {
   },
 
   updateUser: async (req, res) => {
-    const userId = req.params.userid;
+    const userId = req.params.userId;
     const updatedUserData = req.body;
     try {
       const user = await db.User.findByPk(userId);
@@ -59,6 +73,18 @@ module.exports = {
       console.error(error);
       res.status(500).send('Error updating user');
     }
+  },getByUsername: async (req, res) => {
+    const userName = req.params.userName;
+    try {
+      const user = await db.User.findOne({ where: { userName: userName } });
+      if (!user) {
+        return res.status(404).send(`User with name ${userName} not found`);
+      }
+      res.json(user);
+    } catch (error) {
+      console.error(`Error fetching user with name ${userName}:`, error);
+      res.status(500).send('Error fetching user');
+    }
   },
   deleteUser: async (req, res) => {
     const userId = req.params.userId;
@@ -74,4 +100,21 @@ module.exports = {
       res.status(500).send('Error deleting user');
     }
   },
+  switchUserRole: async (req, res) => {
+    const userId = req.params.userId;
+    const newRole = req.body.role;
+    try {
+      const user = await db.User.findByPk(userId);
+      if (!user) {
+        return res.status(404).send("User not found");
+      }
+
+      user.role = newRole;
+      await user.save();
+      res.send("User role updated successfully");
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Error switching user role");
+    }
+  }
 };

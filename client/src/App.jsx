@@ -14,11 +14,13 @@ import Wishlist from "./components/WishList.jsx";
 import Orders from "./components/Orders.jsx"
 import AddProduct from "./components/AddProduct.jsx";
 import EditProfile from "./components/EditProfile.jsx";
+import { ProfileProvider } from "./components/context/ProfileContext.jsx";
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
       <AuthProvider>
+        <ProfileProvider>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path='/about' element={<About/>} />
@@ -35,7 +37,9 @@ function App() {
           <Route path="/addProduct" element={<AddProduct/>} />
           <Route path="/editProfile" element={<EditProfile/>} />
         </Routes>
+        </ProfileProvider>
         </AuthProvider>
+        
       </BrowserRouter>
     </div>
   );
