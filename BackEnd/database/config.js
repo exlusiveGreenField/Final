@@ -1,29 +1,28 @@
-const { Sequelize, DataTypes } = require('sequelize');
- const env= require('dotenv').config();
+const { Sequelize, DataTypes } = require("sequelize");
 
 const dbName = "exclusive";
 const dbUser = "root";
-const dbPass = "walkitlikeitalkit";
+const dbPass = "root";
 const dbHost = "localhost";
 
 const sequelize = new Sequelize(dbName, dbUser, dbPass, {
   host: dbHost,
-  dialect: 'mysql',
+  dialect: "mysql",
 });
 
 sequelize
   .authenticate()
   .then(() => {
-    console.log('Connected database');
+    console.log("Connected database");
   })
   .catch((error) => {
-    console.error('failed to connect to the database:', error);
+    console.error("failed to connect to the database:", error);
   });
 
-const User = require('../Models/User')(sequelize, DataTypes);
-const Product = require('../Models/Products')(sequelize, DataTypes);
-const Order = require('../Models/Order')(sequelize, DataTypes);
-const Wishlist = require('../Models/Wishlist')(sequelize, DataTypes);
+const User = require("../Models/User")(sequelize, DataTypes);
+const Product = require("../Models/Products")(sequelize, DataTypes);
+const Order = require("../Models/Order")(sequelize, DataTypes);
+const Wishlist = require("../Models/Wishlist")(sequelize, DataTypes);
 
 // sequelize
 //   .sync()
@@ -44,12 +43,10 @@ db.Product = Product;
 db.Order = Order;
 db.Wishlist = Wishlist;
 
-  db.User.hasMany(db.Order,{foreignKey: 'userId'});
-  db.Order.belongsTo(db.User,{foreignKey: 'userId'})
-  
-  db.User.belongsToMany(db.Product,{through: 'Wishlist'})
-  db.Product.belongsToMany(db.User,{through: 'Wishlist'})
-  // export your Model Phrase below
-  module.exports = db;
+db.User.hasMany(db.Order, { foreignKey: "userId" });
+db.Product.belongsTo(db.User, { foreignKey: "userId" });
 
+db.User.belongsToMany(db.Product, { through: "Wishlist" });
+db.Product.belongsToMany(db.User, { through: "Wishlist" });
 
+module.exports = db;

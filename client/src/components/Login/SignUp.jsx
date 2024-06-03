@@ -15,20 +15,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 import Navbar from '../Navbar';
 
-import {
-  Box,
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Link,
-} from '@mui/material';
-import { useAuth } from '../context/AuthContext';
-import Navbar from '../Navbar';
+
 
 function Signup() {
   const [username, setUsername] = useState('');
@@ -36,6 +23,7 @@ function Signup() {
   const [role, setRole] = useState('Client');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
+  const [CIN,setCIN]=useState('')
   const navigate = useNavigate();
   const { loginAction } = useAuth();
 
@@ -43,7 +31,7 @@ function Signup() {
     e.preventDefault();
     try {
       await loginAction(
-        { userName: username, email: email, password: password, role: role },
+        { userName: username, email: email, password: password, role: role ,CIN: CIN },
         'signup'
       ).then(() => {
         setMessage('Signup successful!');
@@ -132,6 +120,17 @@ function Signup() {
                         <MenuItem value="Seller">Seller</MenuItem>
                       </Select>
                     </FormControl>
+                    {role === 'Seller' && (
+                      <TextField  
+                        fullWidth
+                        label="CIN"
+                        variant="outlined"
+                        type="text"
+                        value={CIN}
+                        onChange={(e) => setCIN(e.target.value)}
+                        sx={{ marginBottom: 2 }}
+                      />
+                    )}
                     <Button
                       type="submit"
                       variant="contained"

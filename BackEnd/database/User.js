@@ -13,7 +13,7 @@ module.exports = {
   },
 
   getOneUser: async (req, res) => {
-    const userId = req.params.userid;
+    const userId = req.params.userId;
     try {
       const user = await db.User.findOne({ where: { id: userId } });
       if (!user) {

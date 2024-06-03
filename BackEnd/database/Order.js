@@ -4,13 +4,14 @@ module.exports = {
   
 addOrder : async (req, res) => {
   try {
-    const { customerName, products, totalAmount, quantity,status, date } = req.body;
+    const { customerName, products, totalAmount, quantity,status, date, userId } = req.body;
     const newOrder = await db.Order.create({
       customerName,
       products,
       totalAmount,
       status,
       quantity,
+      userId,
       date
     });
 

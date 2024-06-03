@@ -15,6 +15,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 const Navbar = () => {
+  const user=localStorage.getItem('user')
+ 
   return (
     <AppBar
       position="sticky"
@@ -58,15 +60,16 @@ const Navbar = () => {
             </IconButton>
           </Box>
         <Box sx={{ display: "flex", alignItems: "center", marginRight: 10 }}>
-            <IconButton color="inherit">
+            <IconButton color="inherit" component={Link} to="/wishlist">
               <FavoriteBorderIcon />
             </IconButton>
             <IconButton color="inherit" component={Link} to="/cart">
               <ShoppingCartIcon />
             </IconButton>
-            <IconButton color="inherit" >
+            {user && <IconButton color="inherit" component={Link} to="/profile" >
               <AccountCircleIcon />
-            </IconButton>
+            </IconButton>}
+            
           </Box>
       </Toolbar>
     </AppBar>

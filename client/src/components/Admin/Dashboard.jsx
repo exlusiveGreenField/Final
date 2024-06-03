@@ -42,7 +42,6 @@ const Dashboard = () => {
 
   return (
     <div>
-      <NavAdmin />
       <Box sx={{ display: 'flex' }}>
         <SideBar
           onProductsClick={() => seperateModule("products")}
@@ -58,38 +57,7 @@ const Dashboard = () => {
               </Typography>
             </CardContent>
           </Card>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
-              <Card sx={cardStyle}>
-                <CardContent>
-                  <Typography variant="h6" component="h2">
-                    Total Earning
-                  </Typography>
-                  <Typography variant="h4" component="p" color="primary">
-                    $24,895 <span style={{ color: "green" }}>▲ 10%</span>
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Compared to $84,325 last year
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Card sx={cardStyle}>
-                <CardContent>
-                  <Typography variant="h6" component="h2">
-                    Total Views
-                  </Typography>
-                  <Typography variant="h4" component="p" color="primary">
-                    10k <span style={{ color: "green" }}>▲ 20%</span>
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Compared to 8,2K last year
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
+          
           <Box sx={{ marginTop: "20px" }}>
             {showClients && <ClientsTable />}
             {showProducts && <ProductsTable />}

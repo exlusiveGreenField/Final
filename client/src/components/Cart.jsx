@@ -21,6 +21,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 const Cart = () => {
   const [Items, setItems] = useState([]);
   const [couponCode, setCouponCode] = useState("");
@@ -98,32 +99,36 @@ const Cart = () => {
 
   const proceedToBuy = async () => {
     try {
-      
-      const productsArray = Items.map(item => [item.id, item.quantity]);
-  
-      
-      const response = await axios.post('http://localhost:5000/Client/order', {
-        customerName: localStorage.getItem('user'), 
-        products: JSON.stringify(productsArray), 
-        totalAmount: TotalPrice(), 
-        quantity: Items.reduce((acc, item) => acc + item.quantity, 0),
-        status: "Pending",
-        date: new Date() 
-      });
-  
-      
-      if (response.data.success) {
-        Swal.fire("Order Placed", "Your order has been placed successfully", "success");
-        emptyCart();
-        navigate("/");
-      } else {
-        Swal.fire("Error", "Failed to place order", "error");
-      }
+        const token = localStorage.getItem('token');
+        
+
+        const decoded = jwtDecode(token);
+        const userId = decoded.id; 
+        console.log(userId);
+        const productsArray = Items.map(item => [item.id, item.quantity]);
+
+        const response = await axios.post('http://localhost:5000/Client/order', {
+             
+            products: JSON.stringify(productsArray), 
+            totalAmount: TotalPrice(), 
+            quantity: Items.reduce((acc, item) => acc + item.quantity, 0),
+            status: "Pending",
+            userId: userId,
+            date: new Date() 
+        });
+
+        if (response.data.success) {
+            Swal.fire("Order Placed", "Your order has been placed successfully", "success");
+            emptyCart();
+            navigate("/");
+        } else {
+            Swal.fire("Error", "Failed to place order", "error");
+        }
     } catch (error) {
-      console.error("Error placing order:", error);
-      Swal.fire("Error", "Failed to place order", "error");
+        console.error("Error placing order:", error);
+        Swal.fire("Error", "Failed to place order", "error");
     }
-  };
+};
 
   const coupon = () => {
     if (couponCode === "EXCLUSIVE2024") {
