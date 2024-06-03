@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 const db = require('./config');
 const bcrypt = require('bcryptjs');
-const logger = require('../utiles/logger')
+const logger = require('../utiles/logger');
 
 const signUp = async (req, res) => {
-  const { userName, email, password, role } = req.body;
+  const { userName, email, password, role, address,CIN } = req.body;
   try {
     // hash the password using bcrypt with a salt rounds value of 12
     const hashedPw = await bcrypt.hash(password, 12);
@@ -14,9 +14,11 @@ const signUp = async (req, res) => {
       email: email,
       password: hashedPw,
       role: role,
+      address:address,
+      CIN: role === 'Seller' ? CIN : null,
     });
     // GEnerate Token
-    const token = jwt.sign( 
+    const token = jwt.sign(
       { id: newUser.id, role: newUser.role },
       'your-jwt-secrets'
     );
@@ -30,7 +32,7 @@ const signUp = async (req, res) => {
 };
 
 const logIn = async (req, res) => {
-  const { email, password, role } = req.body;
+  const { email, password } = req.body;
   try {
     // find a user in the database with the provided userName and role
     const user = await db.User.findOne({ where: { email } });
@@ -47,11 +49,12 @@ const logIn = async (req, res) => {
     // create a JWT token with the user's id, userName, and role, and sign it with a secret key
     const token = jwt.sign(
       { id: user.id, role: user.role },
-      process.env.JWT_SECRET,{expiresIn: '90d'}
+      'your-jwt-secrets',
+      { expiresIn: '90d' }
     );
-    const obj2 = { data: user, token };
+    const obj2 = { data: user, token }; 
     return res.status(200).json(obj2);
-  }catch (error) {
+  } catch (error) {
     logger.error(`error logging in user: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
