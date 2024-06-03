@@ -19,7 +19,7 @@ const styles = {
     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
   },
   tableHeadRow: {
-    backgroundColor: 'red',
+    backgroundColor: '#f44336',
   },
   tableHeadCell: {
     color: '#ffffff',
@@ -33,6 +33,13 @@ const styles = {
   deleteButton: {
     color: '#d32f2f',
   },
+  switchButton: {
+    color: '#d32f2f',
+    backgroundColor: 'transparent',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
+  },
 };
 
 const ClientsTable = () => {
@@ -40,7 +47,7 @@ const ClientsTable = () => {
 
   const fetchUsersByRole = async (role) => {
     try {
-      const response = await axios.get(`http://localhost:5000/Admin/users/${role}`);
+      const response = await axios.get(`http://localhost:5000/admin/users/${role}`);
       setClients(response.data);
     } catch (error) {
       console.log('error fetching: ', error);
@@ -49,19 +56,19 @@ const ClientsTable = () => {
 
   const handleDeleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:5000/Clients/${userId}`);
-      setClients(clients.filter(client => client.id !== userId));
+      await axios.delete(`http://localhost:5000/Clients/${userId}`)
+      setClients(clients.filter(client => client.id !== userId))
     } catch (error) {
-      console.error('Error deleting user: ', error);
+      console.error('Error deleting user: ', error)
     }
-  };
+  }
 
   const handleSwitchToSeller = async (userId) => {
     try {
-      await axios.put(`http://localhost:5000/admin/users/switch/${userId}`, { role: 'seller' });
-      fetchUsersByRole('client');
+      await axios.put(`http://localhost:5000/admin/users/switch/${userId}`, { role: 'seller' })
+      fetchUsersByRole('client')
     } catch (error) {
-      console.error('Error switching user to seller: ', error);
+      console.error('Error switching user to seller: ', error)
     }
   };
 
@@ -102,7 +109,7 @@ const ClientsTable = () => {
                   </IconButton>
                   <Button
                     variant="contained"
-                    color="primary"
+                    style={styles.switchButton}
                     onClick={() => handleSwitchToSeller(client.id)}
                   >
                     Switch to Seller

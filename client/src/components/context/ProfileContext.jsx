@@ -34,7 +34,7 @@ export const ProfileProvider = ({ children }) => {
   };
 
   return (
-    <ProfileContext.Provider value={{ user, updateUser }}>
+    <ProfileContext.Provider value={ {user:user, updateUser }}>
       {children}
     </ProfileContext.Provider>
   );

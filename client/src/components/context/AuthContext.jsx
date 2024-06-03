@@ -1,7 +1,7 @@
-import React, { useContext, createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { jwtDecode } from 'jwt-decode';
+import React, { useContext, createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
@@ -10,38 +10,36 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState( {});
-  const [token, setToken] = useState(localStorage.getItem('token') || '');
-  const [role, setRole] = useState(localStorage.getItem('role') || '');
+  const [user, setUser] = useState({});
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
+  const [role, setRole] = useState(localStorage.getItem("role") || "");
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        console.log('Decoded token:', decoded);
+
         fetchUser(decoded.id);
       } catch (error) {
-        console.error('Error decoding token:', error);
+        console.error("Error decoding token:", error);
       }
     }
   }, []);
 
   const fetchUser = async (userId) => {
     try {
-      // console.log('user with ID',userId);
       const response = await axios.get(
         `http://localhost:5000/Client/get/${userId}`
       );
-      console.log('userrrr', userId);
+
       setUser(response.data);
-   
+
       setRole(response.data.role);
-      console.log('fetching:', response.data);
     } catch (error) {
-      console.error('Error fetching user information', error);
+      console.error("Error fetching user information", error);
     }
   };
 
@@ -50,37 +48,35 @@ export const AuthProvider = ({ children }) => {
       const response = await axios
         .post(`http://localhost:5000/${data.role}/${str}`, data)
         .then((response) => {
-          console.log(response);
           setUser(response.data.data.userName);
           localStorage.setItem(
-            'user',
+            "user",
             JSON.stringify(response.data.data.userName)
           );
           setToken(response.data.token);
-          console.log('hey');
-          localStorage.setItem('token', response.data.token);
+          localStorage.setItem("token", response.data.token);
           setRole(response.data.data.role);
-          localStorage.setItem('role', JSON.stringify(response.data.data.role));
-
-          navigate('/');
+          localStorage.setItem("role", JSON.stringify(response.data.data.role));
+          if(role==="admin") navigate('/dashboard')
+         else  navigate("/");
         });
     } catch (err) {
       console.error(err);
       if (err.response.data && err.response.data.message) {
         console.error(err.response.data.message);
       } else {
-        console.error('An error occurred during login.');
+        console.error("An error occurred during login.");
       }
     }
   };
 
   const logOut = () => {
     setUser({});
-    setToken('');
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    navigate('/login');
+    setToken("");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/login");
   };
 
   return (

@@ -43,8 +43,8 @@ db.Product = Product;
 db.Order = Order;
 db.Wishlist = Wishlist;
 
-db.User.hasMany(db.Order, { foreignKey: "userId" });
-db.Product.belongsTo(db.User, { foreignKey: "userId" });
+// db.User.hasMany(db.Order, { foreignKey: "userId" });
+// db.Product.belongsTo(db.User, { foreignKey: "userId" });
 
 db.User.belongsToMany(db.Product, { through: "Wishlist" });
 db.Product.belongsToMany(db.User, { through: "Wishlist" });

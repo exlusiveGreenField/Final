@@ -5,7 +5,6 @@ const app = express();
 const clientRoutes=require('./routes/clientRoutes')
 const adminRoutes=require('./routes/adminRoutes')
 const sellerRoutes=require("./routes/sellerRoutes")
-const logger = require('./utiles/logger');
 
 
 

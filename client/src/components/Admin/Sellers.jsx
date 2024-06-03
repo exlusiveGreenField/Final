@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, Table, TableHead, TableBody, TableRow, TableCell, Paper, IconButton, Button } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete'; // Ensure you import DeleteIcon
+import DeleteIcon from '@mui/icons-material/Delete'; 
 
 const styles = {
   header: {
     textAlign: 'center',
     backgroundColor: '#0a0a0a',
-    color: '#e0e1dd',
+    color: '#ffffff',
     padding: '10px',
     borderRadius: '8px',
     marginBottom: '20px',
@@ -19,10 +19,10 @@ const styles = {
     boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
   },
   tableHeadRow: {
-    backgroundColor: '#023047',
+    backgroundColor: '#f44336',
   },
   tableHeadCell: {
-    color: '#ffffff',
+    color: 'black',
     fontWeight: 'bold',
   },
   tableBodyRow: {
@@ -32,6 +32,13 @@ const styles = {
   },
   deleteButton: {
     color: '#d32f2f',
+  },
+  switchButton: {
+    color: '#d32f2f',
+    backgroundColor: 'transparent',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
   },
 };
 
@@ -64,6 +71,7 @@ const Sellers = () => {
       console.error('Error switching user to client: ', error);
     }
   };
+  
 
   useEffect(() => {
     fetchUsersByRole('seller');
@@ -102,7 +110,7 @@ const Sellers = () => {
                   </IconButton>
                   <Button
                     variant="contained"
-                    color="primary"
+                    style={styles.switchButton}
                     onClick={() => handleSwitchToClient(seller.id)}
                   >
                     Switch to Client
@@ -118,4 +126,3 @@ const Sellers = () => {
 };
 
 export default Sellers;
-

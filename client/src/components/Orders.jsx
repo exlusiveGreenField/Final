@@ -15,7 +15,7 @@ const OrdersList = () => {
         const token = localStorage.getItem('token');
         if (token) {
             const decoded = jwtDecode(token);
-            setUser(decoded);  // Store the decoded token data in the user state
+            setUser(decoded);  
             fetchOrders(decoded.id);
         }
     }, []);
@@ -41,8 +41,8 @@ const OrdersList = () => {
     }, []);
 
     const prodNames = (id) => {
-        const product = products.find(product => product.id === id);
-        return product.name 
+        const product = products.find(prod=> prod.id === id);
+        if(product) return product.name 
     };
 
     const logOut = () => {
@@ -65,7 +65,7 @@ const OrdersList = () => {
                         <ListItem key={order.id}>
                             <ListItemText
                                 primary={`Order ID: ${order.id}`}
-                                secondary={`Products: ${JSON.parse(order.products).map(productId => prodNames(productId[0])).join(', ')}, Status: ${order.status}, Total: $${order.totalAmount}`}
+                                secondary={`Products: ${JSON.parse(order.products).map(product => prodNames(product[0])).join(', ')}, Status: ${order.status}, Total: $${order.totalAmount}`}
                             />
                         </ListItem>
                     ))}

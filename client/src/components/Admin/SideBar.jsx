@@ -1,22 +1,26 @@
 import React from "react";
 import { List, ListItem, Button, Box } from "@mui/material";
-import { Link } from "react-router-dom";
 
-
-const SideBar = ({ onProductsClick, onClientsClick, onSellersClick, onLogout }) => {
+const SideBar = ({ onProductsClick, onClientsClick, onSellersClick, onOrdersClick, onLogout }) => {
   const buttonStyle = {
     marginBottom: "20px",
     backgroundColor: "red",
     width: "100%",
-    color: "white",
+    color: "black",
     fontWeight: "bold",
     textTransform: "none",
     borderRadius: "8px",
     '&:hover': {
-      backgroundColor: "#1565c0",
+      backgroundColor: "#f5f5f5",
     },
   };
-
+  const logOut = () => {
+    setUser({});
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    navigate('/login');
+};
   return (
     <Box sx={{ padding: "20px", backgroundColor: "#f5f5f5", height: "100vh", boxShadow: "2px 0px 5px rgba(0, 0, 0, 0.1)" }}>
       <List style={{ marginTop: "20px", color: "black" }}>
@@ -36,12 +40,12 @@ const SideBar = ({ onProductsClick, onClientsClick, onSellersClick, onLogout }) 
           </Button>
         </ListItem>
         <ListItem>
-          <Button variant="contained" component={Link} to="/admin/orders" sx={buttonStyle}>
+          <Button variant="contained" sx={buttonStyle} onClick={onOrdersClick}>
             Orders
           </Button>
         </ListItem>
         <ListItem>
-          <Button variant="contained" color="secondary" onClick={onLogout} sx={buttonStyle}>
+          <Button variant="contained" color="secondary" onClick={() => {logOut}} sx={buttonStyle}>
             Logout
           </Button>
         </ListItem>
