@@ -29,7 +29,7 @@ const Shop = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const category = location.state?.category || '';
-
+  console.log(location.state);
   useEffect(() => {
     if (category) {
       setChosen(category);

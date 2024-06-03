@@ -53,7 +53,7 @@ const Categories = () => {
         <Grid container spacing={3}>
           {categories.slice(index, index + 6).map((category) => (
             <Grid item xs={12} sm={6} md={2} key={category.id}>
-              <Card sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 150 }} onClick={() => navigate('/shop', { state: category.label })}>
+              <Card sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 150 }} onClick={() => navigate('/shop', { state: {category:category.label} })}>
                 <CardContent sx={{ textAlign: 'center' }}>
                   {category.icon}
                   <Typography variant="h6" component="div">

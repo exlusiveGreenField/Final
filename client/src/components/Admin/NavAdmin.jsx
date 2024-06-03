@@ -15,8 +15,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 
 const Navbar = () => {
-  const user=localStorage.getItem('user')
- 
   return (
     <AppBar
       position="sticky"
@@ -32,15 +30,6 @@ const Navbar = () => {
           <Button color="inherit" component={Link} to="/">
             Home
           </Button>
-          <Button color="inherit" component={Link} to="/contact">
-            Contact
-          </Button>
-          <Button color="inherit" component={Link} to="/about">
-            About
-          </Button>
-          <Button color="inherit" component={Link} to="/signup">
-            SignUp
-          </Button>
          
           
         </Box>
@@ -54,22 +43,16 @@ const Navbar = () => {
               padding: "0 10px",
             }}
           >
-            <InputBase placeholder="What are you looking for?" />
-            <IconButton color="inherit">
+           <InputBase placeholder="What r u looking for boss ?" /> 
+             <IconButton color="inherit">
               <SearchIcon />
-            </IconButton>
+            </IconButton> 
           </Box>
-        <Box sx={{ display: "flex", alignItems: "center", marginRight: 10 }}>
-            <IconButton color="inherit" component={Link} to="/wishlist">
-              <FavoriteBorderIcon />
+        <Box sx={{ display: "flex", alignItems: "center", marginRight: 0 }}>
+          
+            <IconButton color="inherit">
+              <AccountCircleIcon/>
             </IconButton>
-            <IconButton color="inherit" component={Link} to="/cart">
-              <ShoppingCartIcon />
-            </IconButton>
-            {user && <IconButton color="inherit" component={Link} to="/profile" >
-              <AccountCircleIcon />
-            </IconButton>}
-            
           </Box>
       </Toolbar>
     </AppBar>

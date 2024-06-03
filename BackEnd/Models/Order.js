@@ -17,6 +17,10 @@ module.exports = (connection, DataTypes) => {
         defaultValue: "pending",
         allowNull: false,
       },
+      userId:{
+        type:DataTypes.INTEGER,
+        allowNull:false
+      }
     });
     return Order;
   };

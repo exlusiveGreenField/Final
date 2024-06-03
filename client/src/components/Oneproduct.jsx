@@ -17,23 +17,31 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import UndoIcon from "@mui/icons-material/Undo";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { jwtDecode } from "jwt-decode";
+import Swal from "sweetalert2";
 
 function One() {
   const [product, setProduct] = useState({});
-  const [rating, setRating] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const location = useLocation();
-  const navigate = useNavigate(); // Using useNavigate to navigate
-
+  const navigate = useNavigate(); 
+  const [userId, setUserId] = useState(null)
   const productId = location.state.productId;
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const decoded = jwtDecode(token);
+      setUserId(decoded.id);
+    
+    }
+  }, []);
   useEffect(() => {
     if (productId) {
       axios
         .get(`http://localhost:5000/Client/products/${productId}`)
         .then((response) => {
           setProduct(response.data);
-          console.log(response.data);
         })
         .catch((error) => {
           console.error("There was an error fetching the product!", error);
@@ -56,11 +64,42 @@ function One() {
     localStorage.setItem('Items', JSON.stringify(cartItems));
     navigate("/cart"); 
   };
+  const addToWishlist = async (e, product) => {
+    e.stopPropagation();
 
+    if (userId) {
+      try {
+        await axios.post("http://localhost:5000/Client/wishlist/add", { userId:userId, productId: product.id });
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Added to wishlist',
+          text: `${product.name} has been added to your wishlist!`,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      } catch (error) {
+        console.error("Error adding to wishlist:", error);
+        let errorMessage = 'There was an error adding the item to your wishlist.';
+        if (error.response && error.response.data  === "Item is already in the wishlist") {
+          errorMessage = 'Item is already in your wishlist.';
+        }
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorMessage,
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
+    } else {
+      navigate('/signup');
+    }
+  };
   return (
     <div className="App">
       <Navbar />
-      <Box sx={{ width: "90%", margin: "0 auto", mt: 4 }}>
+      <Box sx={{ width: "90%", margin: "0 auto", mt: 4,mr: 2}}>
         <Grid container spacing={4} alignItems="center">
           <Grid item xs={12} md={6}>
             <img
@@ -74,15 +113,8 @@ function One() {
               {product.name}
             </Typography>
             <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-              <Rating
-                name="product-rating"
-                value={rating}
-                onChange={(event, newValue) => {
-                  setRating(newValue);
-                }}
-              />
-              <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
-              <Typography variant="body1" sx={{ mr: 2 }}>
+             
+              <Typography variant="body1" sx={{ mr: 2 ,color:'green'}}>
                 {product.stock ? "In Stock" : "Out of Stock"}
               </Typography>
             </Box>
@@ -130,8 +162,9 @@ function One() {
                   p: 1.5, 
                   ml: 1.5,
                 }}
+                onClick={(e)=>addToWishlist(e,product)} 
               >
-                <FavoriteBorderIcon />
+                <FavoriteBorderIcon/>
               </Box>
             </Box>
             <Box
