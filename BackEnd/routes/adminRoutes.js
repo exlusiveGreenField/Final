@@ -14,7 +14,7 @@ router.delete('/products/:productId',Product.removeProduct)
 router.post('/products/add',Product.addProduct)
 
 //JWT token
-
+router.get('/users/:role',User.getAllUsers)
 router.get('/orders', Order.getAllorders);
 router.get('/orders/:orderId', Order.getOrder);
 router.put('/orders/:orderId', Order.markOrder);

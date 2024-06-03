@@ -40,7 +40,7 @@ const ClientsTable = () => {
 
   const fetchUsersByRole = async (role) => {
     try {
-      const response = await axios.get(`http://localhost:5000/admin/users/${role}`);
+      const response = await axios.get(`http://localhost:5000/Admin/users/${role}`);
       setClients(response.data);
     } catch (error) {
       console.log('error fetching: ', error);

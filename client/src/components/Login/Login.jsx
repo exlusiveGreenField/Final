@@ -30,8 +30,7 @@ function Login() {
     try {
       await loginAction({
         userName: username,
-        password: password,
-        role: role,
+        password: password
       });
       setMessage('Welcome!');
       navigate('/');
@@ -95,23 +94,7 @@ function Login() {
                       onChange={(e) => setPassword(e.target.value)}
                       sx={{ marginBottom: 2 }}
                     />
-                    <FormControl
-                      fullWidth
-                      variant="outlined"
-                      sx={{ marginBottom: 2 }}
-                    >
-                      <InputLabel id="role-label">Role</InputLabel>
-                      <Select
-                        labelId="role-label"
-                        id="role"
-                        value={role}
-                        onChange={(e) => setRole(e.target.value)}
-                        label="Role"
-                      >
-                        <MenuItem value="Client">Client</MenuItem>
-                        <MenuItem value="Seller">Seller</MenuItem>
-                      </Select>
-                    </FormControl>
+                    
                     <Button
                       type="submit"
                       variant="contained"

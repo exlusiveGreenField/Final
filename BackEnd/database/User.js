@@ -14,7 +14,7 @@ module.exports = {
   },
 
   getOneUser: async (req, res) => {
-    const userId = req.params.userid;
+    const userId = req.params.userId;
     try {
       const user = await db.User.findByPk(userId);
       if (!user) {
@@ -47,14 +47,18 @@ module.exports = {
     try {
       const user = await db.User.findByPk(userId);
       if (!user) {
-        return res.status(404).send("User not found");
+        return res.status(404).send('User not found');
       }
-      
+      if (updatedUserData.password) {
+        const saltRounds = 12; 
+        updatedUserData.password = await bcrypt.hash(updatedUserData.password, saltRounds);
+      }
+
       const updatedUser = await user.update(updatedUserData);
       res.json(updatedUser);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Error updating user");
+      res.status(500).send('Error updating user');
     }
   },
   deleteUser: async (req, res) => {

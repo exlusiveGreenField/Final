@@ -20,7 +20,11 @@ module.exports = (connection, DataTypes) => {
         allowNull:false,
       },
       role:{type: DataTypes.ENUM("client", "admin","seller"),
-      allowNull: false,}
+      allowNull: false,},
+      CIN:{
+        type:DataTypes.INTEGER,
+        allowNull:true
+      }
     });
     return User
     }

@@ -106,22 +106,7 @@ const ProductsTable = () => {
     }
   };
 
-  const addProduct = async () => {
-    try {
-      await axios.post("http://localhost:5000/admin/products/add", newProduct);
-      fetchProducts();
-      setNewProduct({
-        name: "",
-        price: "",
-        picture: "",
-        category: "",
-        stock: "",
-        description: "",
-      })
-    } catch (error) {
-      console.error("Error adding product:", error);
-    }
-  };
+
 
   const handleOpenModify = (product) => {
     setCurrentProduct(product)
